@@ -4,28 +4,17 @@ package info.niteshjha.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name = "SPR_USER")
@@ -49,4 +38,7 @@ public class User {
     @Past(message = "birthDate should be in past")
     @ApiModelProperty(notes = "birthDate should be in past", required = true)
     private LocalDateTime birthDate;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 }

@@ -1,8 +1,9 @@
 package info.niteshjha;
 
+import info.niteshjha.model.Post;
 import info.niteshjha.model.User;
+import info.niteshjha.service.PostService;
 import info.niteshjha.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,8 +13,14 @@ import java.time.LocalDateTime;
 @SpringBootApplication
 public class SpringMicroserviceApplication implements CommandLineRunner {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final PostService postService;
+
+    public SpringMicroserviceApplication(UserService userService, PostService postService) {
+        this.userService = userService;
+        this.postService = postService;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(SpringMicroserviceApplication.class, args);
@@ -42,10 +49,20 @@ public class SpringMicroserviceApplication implements CommandLineRunner {
         user4.setName("Sample");
         user4.setBirthDate(LocalDateTime.now());
 
-        this.userService.createUser(user);
-        this.userService.createUser(user1);
-        this.userService.createUser(user2);
-        this.userService.createUser(user3);
-        this.userService.createUser(user4);
+        User savedUser1 = this.userService.createUser(user);
+        User savedUser2 = this.userService.createUser(user1);
+        User savedUser3 = this.userService.createUser(user2);
+        User savedUser4 = this.userService.createUser(user3);
+        User savedUser5 = this.userService.createUser(user4);
+
+        postService.createPost(new Post("Sample Post for user1", userService.getUserById(savedUser1.getId())));
+        postService.createPost(new Post("Sample Post for user11", userService.getUserById(savedUser1.getId())));
+        postService.createPost(new Post("Sample Post for user12", userService.getUserById(savedUser1.getId())));
+
+        postService.createPost(new Post("Sample Post for user2", userService.getUserById(savedUser2.getId())));
+
+        postService.createPost(new Post("Sample Post for user3", userService.getUserById(savedUser3.getId())));
+        postService.createPost(new Post("Sample Post for user31", userService.getUserById(savedUser3.getId())));
+        postService.createPost(new Post("Sample Post for user32", userService.getUserById(savedUser3.getId())));
     }
 }

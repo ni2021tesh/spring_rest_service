@@ -27,8 +27,8 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 
     private static final Contact DEFAULT_CONTACT = new Contact("Nitesh Jha", "https://www.niteshjha.info", "niteshjha2021@gmail.com");
     private static final ApiInfo DEFAULT = new ApiInfo("Rest service for managing user and their post",
-                    "The Api provide api end points to create new user and to create post by that particular user", "1.0", "urn:tos", DEFAULT_CONTACT,
-                    "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0", new ArrayList<VendorExtension>());
+            "The Api provide api end points to create new user and to create post by that particular user", "1.0", "urn:tos", DEFAULT_CONTACT,
+            "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0", new ArrayList<VendorExtension>());
 
     private static final Set<String> PRODUCES_AND_CONSUMES_FORMAT = new HashSet<>(Arrays.asList("application/json", "application/xml"));
 
@@ -41,7 +41,8 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                         .paths(PathSelectors.any())
                         .build()
                         .apiInfo(DEFAULT)
-                        .tags(new Tag("users resource","Operations pertaining to user management.")
+                        .tags(new Tag("users resource","Operations pertaining to user management."),
+                        new Tag("posts resource","Operations pertaining to users post management.")
                         ,new Tag("greet i18n resource","Operations related to i18n based on locale"));
         //@formatter:on
     }
