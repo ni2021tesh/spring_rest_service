@@ -1,10 +1,14 @@
 // Copyright (c) 2018 Travelex Ltd
 
-package info.niteshjha.spring.springmicroservice.controller;
+package info.niteshjha.controller;
 
-import info.niteshjha.spring.springmicroservice.exception.UserNotFoundException;
-import info.niteshjha.spring.springmicroservice.model.User;
-import info.niteshjha.spring.springmicroservice.service.UserService;
+import info.niteshjha.exception.UserNotFoundException;
+import info.niteshjha.model.User;
+import info.niteshjha.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -23,6 +27,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 @RestController
+@Api(tags = {"users resource"})
 public class UserController {
 
     private UserService userService;
@@ -31,6 +36,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @ApiOperation(value = "search a user with an ID", response = User.class, notes = "This endpoint is used to retrieve user based on userId.")
     @GetMapping(value = "/users/{userId}")
     public Resource<User> getUserById(@PathVariable(value = "userId") Integer userId) {
 
@@ -53,6 +59,12 @@ public class UserController {
 
 
 
+    @ApiOperation(value = "view a list of available users", response = List.class, notes = "This endpoint is used to retrieve all the saved user "
+                    + "list from the database.")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully retrieved user list"),
+                    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+                    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+                    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
     @GetMapping(value = "/users")
     public ResponseEntity<Object> getAllUsers() {
 
@@ -65,6 +77,7 @@ public class UserController {
     }
 
 
+    @ApiOperation(value = "add a user", response = User.class, notes = "This endpoint is used to create a new user.")
     @PostMapping(value = "/users")
     public ResponseEntity createUser(@RequestBody @Valid User user) {
         User savedUser = userService.createUser(user);
@@ -72,17 +85,24 @@ public class UserController {
         return ResponseEntity.created(uri).body(savedUser);
     }
 
+    @ApiOperation(value = "delete a user", response = Void.class, notes = "This endpoint is used to delete the user from the database based on "
+                    + "userId.")
     @DeleteMapping(value = "/users/{userId}")
     public ResponseEntity deleteUser(@PathVariable(value = "userId") Integer userId) {
         userService.deleteUserById(userId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PutMapping(value = "/users")
-    public ResponseEntity updateUser(@RequestBody @Valid User user) {
+    @ApiOperation(value = "update a user", response = User.class, notes = "This endpoint is used to update the saved user by providing the userId.")
+    @PutMapping(value = "/users/{userId}")
+    public ResponseEntity updateUser(@PathVariable Integer userId, @RequestBody @Valid User user) {
+        User retrievedUser = userService.getUserById(userId);
+
+        if (retrievedUser == null) {
+            throw new UserNotFoundException("User With Id :" + userId + " not found");
+        }
+
         User savedUser = userService.modifyUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(savedUser);
     }
-
-
 }

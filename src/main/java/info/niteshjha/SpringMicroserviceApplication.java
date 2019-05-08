@@ -1,7 +1,7 @@
-package info.niteshjha.spring.springmicroservice;
+package info.niteshjha;
 
-import info.niteshjha.spring.springmicroservice.model.User;
-import info.niteshjha.spring.springmicroservice.service.UserService;
+import info.niteshjha.model.User;
+import info.niteshjha.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

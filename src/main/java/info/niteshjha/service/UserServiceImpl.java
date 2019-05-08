@@ -1,10 +1,10 @@
 // Copyright (c) 2018 Travelex Ltd
 
-package info.niteshjha.spring.springmicroservice.service;
+package info.niteshjha.service;
 
-import info.niteshjha.spring.springmicroservice.exception.UserNotFoundException;
-import info.niteshjha.spring.springmicroservice.model.User;
-import info.niteshjha.spring.springmicroservice.repository.UserRepository;
+import info.niteshjha.exception.UserNotFoundException;
+import info.niteshjha.model.User;
+import info.niteshjha.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

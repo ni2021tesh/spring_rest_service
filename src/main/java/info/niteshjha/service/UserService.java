@@ -1,8 +1,8 @@
 // Copyright (c) 2018 Travelex Ltd
 
-package info.niteshjha.spring.springmicroservice.service;
+package info.niteshjha.service;
 
-import info.niteshjha.spring.springmicroservice.model.User;
+import info.niteshjha.model.User;
 
 import java.util.List;
 

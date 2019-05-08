@@ -1,4 +1,4 @@
-package info.niteshjha.spring.springmicroservice;
+package info.niteshjha;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

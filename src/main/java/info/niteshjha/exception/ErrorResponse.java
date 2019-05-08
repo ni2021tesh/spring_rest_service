@@ -1,4 +1,4 @@
-package info.niteshjha.spring.springmicroservice.exception;
+package info.niteshjha.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,6 +1,6 @@
 // Copyright (c) 2018 Travelex Ltd
 
-package info.niteshjha.spring.springmicroservice.exception;
+package info.niteshjha.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
